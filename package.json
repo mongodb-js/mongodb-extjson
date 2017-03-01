@@ -1,0 +1,31 @@
+{
+  "name": "mongodb-extjson",
+  "version": "1.0.0",
+  "description": "MongoDB Extended JSON library",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christkv/mongodb-extjson.git"
+  },
+  "keywords": [
+    "mongodb",
+    "json",
+    "extended",
+    "extjson",
+    "parser",
+    "serializer",
+    "deserializer"
+  ],
+  "author": "Christian Kvalheim",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/christkv/mongodb-extjson/issues"
+  },
+  "homepage": "https://github.com/christkv/mongodb-extjson#readme",
+  "devDependencies": {
+    "mongodb": "^2.2.24"
+  }
+}
