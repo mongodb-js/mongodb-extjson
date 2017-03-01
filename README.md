@@ -26,7 +26,7 @@ console.log(JSON.stringify(doc, null, 2));
 Let's look at how we can serialize a document.
 
 ### Serialize a document
-Serialize a document using `ExtJSON.prototype.serialize`.
+Serialize a document using `ExtJSON.prototype.stringify`.
 
 ```js
 var ExtJSON = require('mongodb-extjson');
@@ -38,11 +38,11 @@ var doc = {
   int32: new Int32(10),
 }
 
-console.log(ExtJSON.serialize(doc, null, 2));
+console.log(ExtJSON.stringify(doc, null, 2));
 ```
 
 ### Deserialize a document
-Serialize a document using `ExtJSON.prototype.deseralize(string, options)`. The method supports the option `strict`.
+Serialize a document using `ExtJSON.prototype.parse(string, options)`. The method supports the option `strict`.
 
 ```
 strict = true, will return BSON type objects for all values.
@@ -60,18 +60,18 @@ var doc = {
 }
 
 // Serialize the document
-var text = ExtJSON.serialize(doc, null, 2);
+var text = ExtJSON.stringify(doc, null, 2);
 // Deserialize using strict mode (returning BSON type objects)
-console.dir(ExtJSON.deserialize(text, {strict: true}));
+console.dir(ExtJSON.parse(text, {strict: true}));
 // Deserialize using strict mode (converting to native JS types where possible)
-console.dir(ExtJSON.deserialize(text, {strict: true}));
+console.dir(ExtJSON.parse(text, {strict: true}));
 ```
 
 ## Usage with Builtin BSON types
 This allows you to use this library with full types in a Browser
 
 ### Serialize a document
-Serialize a document using `ExtJSON.prototype.serialize`.
+Serialize a document using `ExtJSON.prototype.stringify`.
 
 ```js
 var ExtJSON = require('mongodb-extjson');
@@ -82,11 +82,11 @@ var doc = {
   int32: new Int32(10),
 }
 
-console.log(ExtJSON.serialize(doc, null, 2));
+console.log(ExtJSON.stringify(doc, null, 2));
 ```
 
 ### Deserialize a document
-Serialize a document using `ExtJSON.prototype.deseralize(string, options)`. The method supports the option `strict`.
+Serialize a document using `ExtJSON.prototype.parse(string, options)`. The method supports the option `strict`.
 
 ```
 strict = true, will return BSON type objects for all values.
@@ -103,9 +103,9 @@ var doc = {
 }
 
 // Serialize the document
-var text = ExtJSON.serialize(doc, null, 2);
+var text = ExtJSON.stringify(doc, null, 2);
 // Deserialize using strict mode (returning BSON type objects)
-console.dir(ExtJSON.deserialize(text, {strict: true}));
+console.dir(ExtJSON.parse(text, {strict: true}));
 // Deserialize using strict mode (converting to native JS types where possible)
-console.dir(ExtJSON.deserialize(text, {strict: true}));
+console.dir(ExtJSON.parse(text, {strict: true}));
 ```

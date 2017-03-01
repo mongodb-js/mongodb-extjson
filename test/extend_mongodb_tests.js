@@ -103,7 +103,7 @@ describe('Extended JSON', () => {
     var extJSON = new ExtJSON();
 
     // Deserialize the document using non strict mode
-    var doc1 = extJSON.deserialize(extJSON.serialize(nodeDoc, null, 0), {strict:false});
+    var doc1 = extJSON.parse(extJSON.stringify(nodeDoc, null, 0), {strict:false});
 
     // Validate the values
     assert.equal(300, doc1.int32Number);
@@ -112,7 +112,7 @@ describe('Extended JSON', () => {
     assert.equal(19007199250000000.120, doc1.doubleNumberIntFit);
 
     // Deserialize the document using strict mode
-    var doc1 = extJSON.deserialize(JSON.stringify(nodeDoc, null, 0), {strict:true});
+    var doc1 = extJSON.parse(JSON.stringify(nodeDoc, null, 0), {strict:true});
 
     // Validate the values
     assert.equal('Int32', doc1.int32Number._bsontype);
@@ -128,7 +128,7 @@ describe('Extended JSON', () => {
     var extJSON = new ExtJSON();
 
     // Deserialize the document using non strict mode
-    var doc1 = extJSON.deserialize(extJSON.serialize(browserDoc, null, 0), {strict:false});
+    var doc1 = extJSON.parse(extJSON.stringify(browserDoc, null, 0), {strict:false});
 
     // Validate the values
     assert.equal(300, doc1.int32Number);
@@ -137,7 +137,7 @@ describe('Extended JSON', () => {
     assert.equal(19007199250000000.120, doc1.doubleNumberIntFit);
 
     // Deserialize the document using strict mode
-    var doc1 = extJSON.deserialize(JSON.stringify(browserDoc, null, 0), {strict:true});
+    var doc1 = extJSON.parse(JSON.stringify(browserDoc, null, 0), {strict:true});
 
     // Validate the values
     assert.equal('Int32', doc1.int32Number._bsontype);
@@ -158,13 +158,13 @@ describe('Extended JSON', () => {
     };
 
     // Serialize the document
-    var text = extJSON.serialize(doc1, null, 0);
+    var text = extJSON.stringify(doc1, null, 0);
     assert.equal('{"int32":{"$numberInt":"10"}}', text);
 
     // Deserialize the json in strict and non strict mode
-    var doc2 = extJSON.deserialize(text, {strict: true});
+    var doc2 = extJSON.parse(text, {strict: true});
     assert.equal('Int32', doc2.int32._bsontype);
-    doc2 = extJSON.deserialize(text, {strict: false});
+    doc2 = extJSON.parse(text, {strict: false});
     assert.equal(10, doc2.int32);
     done();
   });
