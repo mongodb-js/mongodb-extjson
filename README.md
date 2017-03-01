@@ -38,7 +38,7 @@ var doc = {
   int32: new Int32(10),
 }
 
-console.log(ExtJSON.stringify(doc, null, 2));
+console.log(extJSON.stringify(doc, null, 2));
 ```
 
 ### Deserialize a document
@@ -60,11 +60,11 @@ var doc = {
 }
 
 // Serialize the document
-var text = ExtJSON.stringify(doc, null, 2);
+var text = extJSON.stringify(doc, null, 2);
 // Deserialize using strict mode (returning BSON type objects)
-console.dir(ExtJSON.parse(text, {strict: true}));
+console.dir(extJSON.parse(text, {strict: true}));
 // Deserialize using strict mode (converting to native JS types where possible)
-console.dir(ExtJSON.parse(text, {strict: true}));
+console.dir(extJSON.parse(text, {strict: true}));
 ```
 
 ## Usage with Builtin BSON types
@@ -82,7 +82,7 @@ var doc = {
   int32: new Int32(10),
 }
 
-console.log(ExtJSON.stringify(doc, null, 2));
+console.log(extJSON.stringify(doc, null, 2));
 ```
 
 ### Deserialize a document
@@ -103,9 +103,9 @@ var doc = {
 }
 
 // Serialize the document
-var text = ExtJSON.stringify(doc, null, 2);
+var text = extJSON.stringify(doc, null, 2);
 // Deserialize using strict mode (returning BSON type objects)
-console.dir(ExtJSON.parse(text, {strict: true}));
+console.dir(extJSON.parse(text, {strict: true}));
 // Deserialize using strict mode (converting to native JS types where possible)
-console.dir(ExtJSON.parse(text, {strict: true}));
+console.dir(extJSON.parse(text, {strict: true}));
 ```
