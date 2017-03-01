@@ -147,4 +147,25 @@ describe('Extended JSON', () => {
 
     done();
   });
+
+  it('should correctly serialize and deserialize using built in BSON', (done) => {
+    // Create ExtJSON instance
+    var extJSON = new ExtJSON();
+    var Int32 = ExtJSON.BSON.Int32;
+    // Create a doc
+    var doc1 = {
+      int32: new Int32(10)
+    };
+
+    // Serialize the document
+    var text = extJSON.serialize(doc1, null, 0);
+    assert.equal('{"int32":{"$numberInt":"10"}}', text);
+
+    // Deserialize the json in strict and non strict mode
+    var doc2 = extJSON.deserialize(text, {strict: true});
+    assert.equal('Int32', doc2.int32._bsontype);
+    doc2 = extJSON.deserialize(text, {strict: false});
+    assert.equal(10, doc2.int32);
+    done();
+  });
 });
