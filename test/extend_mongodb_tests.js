@@ -67,6 +67,9 @@ describe('Extended JSON', function() {
       Symbol = mongodb.Symbol,
       Timestamp = mongodb.Timestamp;
 
+    buffer = new Uint8Array(64);
+    for(var i = 0; i < buffer.length; i++) buffer[i] = i;
+
     browserDoc = {
       _id: new Int32(100),
       gh:new Int32(1),
