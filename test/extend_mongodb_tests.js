@@ -98,7 +98,7 @@ describe('Extended JSON', function() {
     done();
   });
 
-  it('should correctly deserialize using strict and non-strict mode using nodeDoc', (done) => {
+  it('should correctly deserialize using strict and non-strict mode using nodeDoc', function(done) {
     // Create ExtJSON instance
     var extJSON = new ExtJSON();
 
