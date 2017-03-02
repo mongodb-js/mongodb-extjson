@@ -4,7 +4,7 @@ var ExtJSON = require('../'),
 var nodeDoc;
 var browserDoc;
 
-describe('Extended JSON', () => {
+describe('Extended JSON', function() {
   beforeEach(function() {
     var mongodb = ExtJSON.extend(require('mongodb'));
     var Binary = mongodb.Binary,
@@ -91,7 +91,7 @@ describe('Extended JSON', () => {
     };
   });
 
-  it('should correctly extend the existing mongodb module', (done) => {
+  it('should correctly extend the existing mongodb module', function(done) {
     // Serialize the document
     var json = '{"_id":{"$numberInt":"100"},"gh":{"$numberInt":"1"},"binary":{"$binary":"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+Pw==","$type":"00"},"date":"2017-03-01T12:40:56.737Z","code":{"$code":"function() {}","$scope":{"a":{"$numberInt":"1"}}},"dbRef":{"$ref":"tests","$id":{"$numberInt":"1"},"$db":"test"},"decimal":{"$numberDecimal":"100"},"double":{"$numberDouble":"10.1"},"int32":{"$numberInt":"10"},"long":{"$numberLong":"200"},"maxKey":{"$maxKey":1},"minKey":{"$minKey":1},"objectId":{"$oid":"111111111111111111111111"},"regexp":{"$regex":"hello world","$options":"i"},"symbol":{"$symbol":"symbol"},"timestamp":{"$timestamp":"1000"},"int32Number":300,"doubleNumber":200.2,"longNumberIntFit":7036874417766400,"doubleNumberIntFit":19007199250000000}';
     assert.equal(json, JSON.stringify(nodeDoc, null, 0));
@@ -123,7 +123,7 @@ describe('Extended JSON', () => {
     done();
   });
 
-  it('should correctly deserialize using strict and non-strict mode using browserDoc', (done) => {
+  it('should correctly deserialize using strict and non-strict mode using browserDoc', function(done) {
     // Create ExtJSON instance
     var extJSON = new ExtJSON();
 
@@ -148,7 +148,7 @@ describe('Extended JSON', () => {
     done();
   });
 
-  it('should correctly serialize and deserialize using built in BSON', (done) => {
+  it('should correctly serialize and deserialize using built in BSON', function(done) {
     // Create ExtJSON instance
     var extJSON = new ExtJSON();
     var Int32 = ExtJSON.BSON.Int32;
