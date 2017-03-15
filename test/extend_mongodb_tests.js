@@ -175,7 +175,7 @@ describe('Extended JSON', function() {
   it('should correctly throw when passed a non string to parse', function(done) {
     // Create ExtJSON instance
     var extJSON = new ExtJSON();
-    assert.throws(() => {
+    assert.throws(function() {
       extJSON.parse({}, {strict: true})
     }, Error);
 
