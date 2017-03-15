@@ -171,4 +171,14 @@ describe('Extended JSON', function() {
     assert.equal(10, doc2.int32);
     done();
   });
+
+  it('should correctly throw when passed a non string to parse', function(done) {
+    // Create ExtJSON instance
+    var extJSON = new ExtJSON();
+    assert.throws(() => {
+      extJSON.parse({}, {strict: true})
+    }, Error);
+
+    done();
+  });
 });
