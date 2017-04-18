@@ -4,7 +4,8 @@
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/"
+    "test": "mocha test/",
+    "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/christkv/mongodb-extjson#readme",
   "devDependencies": {
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mongodb": "mongodb/node-mongodb-native#2.2",
     "typedarray": "0.0.6"
