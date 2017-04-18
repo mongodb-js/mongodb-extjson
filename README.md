@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/christkv/mongodb-extjson.svg?branch=master)](https://travis-ci.org/christkv/mongodb-extjson)
+
 # MongoDB Extended JSON Library
 
 The MongoDB Extended JSON Library allows you to turn a MongoDB Document into Extended JSON.
