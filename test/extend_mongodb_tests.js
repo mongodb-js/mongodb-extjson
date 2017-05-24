@@ -193,7 +193,6 @@ describe('Extended JSON', function() {
       });
 
       it('should correctly serialize bson types when they are values', function() {
-        // Create ExtJSON instance
         var extJSON = new ExtJSON();
         var Int32 = ExtJSON.BSON.Int32,
             ObjectId = ExtJSON.BSON.ObjectID;
@@ -205,6 +204,21 @@ describe('Extended JSON', function() {
         serialized =
           extJSON.stringify({ _id: { $nin: [ new ObjectID('591801a468f9e7024b6235ea') ] } });
         assert.equal(serialized, '{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
+      });
+
+      it('should correctly parse null values', function() {
+        var extJSON = new ExtJSON();
+        var ObjectId = ExtJSON.BSON.ObjectID;
+
+        assert.equal(extJSON.parse('null'), null);
+        assert.deepEqual(extJSON.parse('[null]'), [ null ]);
+        var input = '{"result":[{"_id":{"$oid":"591801a468f9e7024b623939"},"emptyField":null}]}';
+        var parsed = extJSON.parse(input, { strict: false });
+        assert.deepEqual(parsed, {
+          result: [
+            { _id: new ObjectID('591801a468f9e7024b623939'), emptyField: null }
+          ]
+        });
       });
 
       it('should correctly throw when passed a non-string to parse', function() {
