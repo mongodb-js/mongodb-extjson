@@ -1,6 +1,6 @@
 {
   "name": "mongodb-extjson",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
   "scripts": {
@@ -28,8 +28,7 @@
   "homepage": "https://github.com/christkv/mongodb-extjson#readme",
   "devDependencies": {
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "mongodb": "mongodb/node-mongodb-native#2.2",
-    "typedarray": "0.0.6"
+    "mocha": "^3.4.1",
+    "mongodb": "^2.2.27"
   }
 }
