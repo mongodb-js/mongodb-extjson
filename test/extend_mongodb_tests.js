@@ -192,6 +192,21 @@ describe('Extended JSON', function() {
         assert.equal(10, doc2.int32);
       });
 
+      it('should correctly serialize bson types when they are values', function() {
+        // Create ExtJSON instance
+        var extJSON = new ExtJSON();
+        var Int32 = ExtJSON.BSON.Int32,
+            ObjectId = ExtJSON.BSON.ObjectID;
+
+        var serialized = extJSON.stringify(new ObjectID('591801a468f9e7024b6235ea'));
+        assert.equal(serialized, '{"$oid":"591801a468f9e7024b6235ea"}');
+        serialized = extJSON.stringify(new Int32(42));
+        assert.equal(serialized, '{"$numberInt":"42"}');
+        serialized =
+          extJSON.stringify({ _id: { $nin: [ new ObjectID('591801a468f9e7024b6235ea') ] } });
+        assert.equal(serialized, '{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
+      });
+
       it('should correctly throw when passed a non-string to parse', function() {
         // Create ExtJSON instance
         var extJSON = new ExtJSON();
