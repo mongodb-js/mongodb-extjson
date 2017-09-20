@@ -5,21 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/",
-    "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/"
+    "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/",
+    "lint": "eslint lib test",
+    "format":
+      "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/christkv/mongodb-extjson.git"
   },
-  "keywords": [
-    "mongodb",
-    "json",
-    "extended",
-    "extjson",
-    "parser",
-    "serializer",
-    "deserializer"
-  ],
+  "keywords": ["mongodb", "json", "extended", "extjson", "parser", "serializer", "deserializer"],
   "author": "Christian Kvalheim",
   "license": "Apache-2.0",
   "bugs": {
