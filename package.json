@@ -7,14 +7,21 @@
     "test": "mocha test/",
     "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/",
     "lint": "eslint lib test",
-    "format":
-      "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'"
+    "format": "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/christkv/mongodb-extjson.git"
   },
-  "keywords": ["mongodb", "json", "extended", "extjson", "parser", "serializer", "deserializer"],
+  "keywords": [
+    "mongodb",
+    "json",
+    "extended",
+    "extjson",
+    "parser",
+    "serializer",
+    "deserializer"
+  ],
   "author": "Christian Kvalheim",
   "license": "Apache-2.0",
   "bugs": {
@@ -22,8 +29,15 @@
   },
   "homepage": "https://github.com/christkv/mongodb-extjson#readme",
   "devDependencies": {
+    "bson": "mongodb/js-bson#2.0.0",
+    "chai": "^4.1.2",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.1",
     "mongodb": "^2.2.27"
+  },
+  "dependencies": {
+    "eslint": "^4.7.2",
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "^1.7.0"
   }
 }
