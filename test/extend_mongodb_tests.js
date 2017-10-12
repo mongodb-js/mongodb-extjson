@@ -1,5 +1,8 @@
-var assert = require('assert'),
-  path = require('path');
+'use strict';
+
+let assert = require('assert'),
+  path = require('path'),
+  expect = require('chai').expect;
 
 function requireUncached(moduleName) {
   var resolved = require.resolve(moduleName);
@@ -16,7 +19,7 @@ function requireUncached(moduleName) {
 }
 
 var $Buffer = Buffer,
-  ExtJSON = null,
+  extJSON = null,
   mongodb = null;
 
 // BSON types
@@ -39,11 +42,11 @@ var environments = [
   {
     name: 'node',
     setup: function() {
-      ExtJSON = requireUncached('..');
+      extJSON = requireUncached('..');
     },
     teardown: function() {},
     beforeEach: function() {
-      mongodb = ExtJSON.extend(require('mongodb'));
+      mongodb = require('mongodb');
       Binary = mongodb.Binary;
       Code = mongodb.Code;
       DBRef = mongodb.DBRef;
@@ -95,13 +98,14 @@ var environments = [
     setup: function() {
       $Buffer = global.Buffer;
       global.Buffer = undefined;
-      ExtJSON = requireUncached('..');
+      extJSON = requireUncached('..');
     },
     teardown: function() {
       global.Buffer = $Buffer;
     },
     beforeEach: function() {
-      mongodb = require('../lib/bson');
+      //mongodb = requireUncached('../../js-bson');
+      mongodb = requireUncached('bson');
       Binary = mongodb.Binary;
       Code = mongodb.Code;
       DBRef = mongodb.DBRef;
@@ -171,9 +175,6 @@ describe('Extended JSON', function() {
       });
 
       it('should correctly deserialize using strict, and non-strict mode', function() {
-        // Create ExtJSON instance
-        var extJSON = new ExtJSON();
-
         // Deserialize the document using non strict mode
         var doc1 = extJSON.parse(extJSON.stringify(test.doc, null, 0), { strict: false });
 
@@ -184,19 +185,18 @@ describe('Extended JSON', function() {
         assert.equal(19007199250000000.12, doc1.doubleNumberIntFit);
 
         // Deserialize the document using strict mode
-        doc1 = extJSON.parse(JSON.stringify(test.doc, null, 0), { strict: true });
+        doc1 = extJSON.parse(extJSON.stringify(test.doc, null, 0), { strict: true });
 
         // Validate the values
-        assert.equal('Int32', doc1.int32Number._bsontype);
-        assert.equal('Double', doc1.doubleNumber._bsontype);
-        assert.equal('Double', doc1.longNumberIntFit._bsontype);
-        assert.equal('Double', doc1.doubleNumberIntFit._bsontype);
+        expect(doc1.int32Number._bsontype).to.equal('Int32');
+        expect(doc1.doubleNumber._bsontype).to.equal('Double');
+        expect(doc1.longNumberIntFit._bsontype).to.equal('Long');
+        expect(doc1.doubleNumberIntFit._bsontype).to.equal('Long');
       });
 
       it('should correctly serialize, and deserialize using built-in BSON', function() {
         // Create ExtJSON instance
-        var extJSON = new ExtJSON();
-        var Int32 = ExtJSON.BSON.Int32;
+        var Int32 = extJSON.BSON.Int32;
         // Create a doc
         var doc1 = {
           int32: new Int32(10)
@@ -204,47 +204,43 @@ describe('Extended JSON', function() {
 
         // Serialize the document
         var text = extJSON.stringify(doc1, null, 0);
-        assert.equal('{"int32":{"$numberInt":"10"}}', text);
+        expect(text).to.equal('{"int32":{"$numberInt":"10"}}');
 
         // Deserialize the json in strict and non strict mode
         var doc2 = extJSON.parse(text, { strict: true });
-        assert.equal('Int32', doc2.int32._bsontype);
+        expect(doc2.int32._bsontype).to.equal('Int32');
         doc2 = extJSON.parse(text, { strict: false });
-        assert.equal(10, doc2.int32);
+        expect(doc2.int32).to.equal(10);
       });
 
       it('should correctly serialize bson types when they are values', function() {
-        var extJSON = new ExtJSON();
-        var Int32 = ExtJSON.BSON.Int32;
-
+        var Int32 = extJSON.BSON.Int32;
         var serialized = extJSON.stringify(new ObjectID('591801a468f9e7024b6235ea'));
-        assert.equal(serialized, '{"$oid":"591801a468f9e7024b6235ea"}');
+        expect(serialized).to.equal('{"$oid":"591801a468f9e7024b6235ea"}');
         serialized = extJSON.stringify(new Int32(42));
-        assert.equal(serialized, '{"$numberInt":"42"}');
+        expect(serialized).to.equal('{"$numberInt":"42"}');
         serialized = extJSON.stringify({
           _id: { $nin: [new ObjectID('591801a468f9e7024b6235ea')] }
         });
-        assert.equal(serialized, '{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
+        expect(serialized).to.equal('{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
       });
 
       it('should correctly parse null values', function() {
-        var extJSON = new ExtJSON();
+        expect(extJSON.parse('null')).to.be.null;
+        expect(extJSON.parse('[null]')[0]).to.be.null;
 
-        assert.equal(extJSON.parse('null'), null);
-        assert.deepEqual(extJSON.parse('[null]'), [null]);
         var input = '{"result":[{"_id":{"$oid":"591801a468f9e7024b623939"},"emptyField":null}]}';
         var parsed = extJSON.parse(input, { strict: false });
+
         assert.deepEqual(parsed, {
           result: [{ _id: new ObjectID('591801a468f9e7024b623939'), emptyField: null }]
         });
       });
 
       it('should correctly throw when passed a non-string to parse', function() {
-        // Create ExtJSON instance
-        var extJSON = new ExtJSON();
-        assert.throws(function() {
+        expect(() => {
           extJSON.parse({}, { strict: true });
-        }, Error);
+        }).to.throw;
       });
     });
   });
