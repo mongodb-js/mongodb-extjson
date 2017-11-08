@@ -1,17 +1,18 @@
 {
   "name": "mongodb-extjson",
-  "version": "1.0.5",
+  "version": "0.0.0-semantic-release",
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/",
     "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/",
     "lint": "eslint lib test",
-    "format": "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'"
+    "format": "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mongodb-js/mongodb-extjson.git"
+    "url": "https://github.com/mongodb-js/mongodb-extjson.git"
   },
   "keywords": [
     "mongodb",
@@ -35,7 +36,8 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.4.1",
     "mongodb": "^2.2.27",
-    "prettier": "^1.7.0"
+    "prettier": "^1.7.0",
+    "semantic-release": "^8.2.0"
   },
   "dependencies": {
     "bson": "mongodb/js-bson#2.0.0"
