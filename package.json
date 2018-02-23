@@ -3,11 +3,14 @@
   "version": "2.0.0",
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
+  "browser": "dist/bundle.js",
   "scripts": {
     "test": "mocha test/",
     "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/",
     "lint": "eslint lib test",
-    "format": "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'"
+    "format": "prettier --print-width 100 --tab-width 2 --single-quote --write 'test/**/*.js' 'lib/**/*.js'",
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -29,13 +32,19 @@
   },
   "homepage": "https://github.com/mongodb-js/mongodb-extjson#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "eslint": "^4.7.2",
     "eslint-plugin-prettier": "^2.3.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.1",
     "mongodb": "^2.2.27",
-    "prettier": "^1.7.0"
+    "prettier": "^1.7.0",
+    "rollup": "^0.56.2",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-node-resolve": "^3.0.3"
   },
   "dependencies": {
     "bson": "mongodb/js-bson#2.0.0"
