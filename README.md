@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/mongodb-js/mongodb-extjson.svg?branch=master)](https://travis-ci.org/mongodb-js/mongodb-extjson)
+# MongoDB Extended JSON Library  [![][npm_img]][npm_url] [![][travis_img]][travis_url]
 
-# MongoDB Extended JSON Library
 
 The MongoDB Extended JSON Library allows you to convert MongoDB documents to Extended JSON, and vice versa. See the Extended JSON specification [here](https://github.com/mongodb/specifications/blob/master/source/extended-json.rst).
 
@@ -79,3 +78,8 @@ var text = '{"int32":{"$numberInt":"10"}}';
 // prints { int32: { [String: '10'] _bsontype: 'Int32', value: '10' } }
 console.log(EJSON.parse(text));
 ```
+
+[travis_img]: https://api.travis-ci.org/mongodb-js/mongodb-extjson.svg?branch=master
+[travis_url]: https://travis-ci.org/mongodb-js/mongodb-extjson
+[npm_img]: https://img.shields.io/npm/v/mongodb-extjson.svg
+[npm_url]: https://www.npmjs.org/package/mongodb-extjson
