@@ -1,3 +1,17 @@
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/mongodb-js/mongodb-extjson/compare/v2.0.0...v2.1.1) (2018-04-01)
+
+
+### Features
+
+* **browser:** Added browser parameter in package.json pointing to transpiled dist ([97b0feb](https://github.com/mongodb-js/mongodb-extjson/commit/97b0feb))
+* **double:** supported relaxed mode for double parsing ([0ee5016](https://github.com/mongodb-js/mongodb-extjson/commit/0ee5016))
+* **int32:** support relaxed parsing of int32 types ([c8513cb](https://github.com/mongodb-js/mongodb-extjson/commit/c8513cb))
+* **long:** support relaxed parsing of long types ([ac52ae5](https://github.com/mongodb-js/mongodb-extjson/commit/ac52ae5))
+* **parsing:** support relaxed parsing of extended json ([92e06d3](https://github.com/mongodb-js/mongodb-extjson/commit/92e06d3))
+
+
+
 <a name="2.0.0"></a>
 # 2.0.0 (2017-11-20)
 
