@@ -183,6 +183,21 @@ describe('Extended JSON', function() {
           extJSON.parse({}, { strict: true });
         }).to.throw;
       });
+
+      it('should allow relaxed parsing', function() {
+        const inputObject = {
+          int: { $numberInt: '500' },
+          long: { $numberLong: '42' },
+          double: { $numberDouble: '24' }
+        };
+
+        const parsed = extJSON.parse(JSON.stringify(inputObject), { relaxed: true });
+        expect(parsed).to.eql({
+          int: 500,
+          long: 42,
+          double: 24
+        });
+      });
     });
   });
 });
