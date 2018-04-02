@@ -15,7 +15,7 @@ This helps the team automate [CHANGELOG.md][changelog] generation.
 ## Pull Request Process
 
 1. Update the README.md or similar documentation with details of changes you
-   wish to make.
+   wish to make, if applicable. 
 2. Add any appropriate tests.
 3. Make your code or other changes.
 4. Review guidelines such as
