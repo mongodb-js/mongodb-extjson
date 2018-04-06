@@ -1,6 +1,6 @@
 {
   "name": "mongodb-extjson",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
   "browser": "dist/bundle.js",

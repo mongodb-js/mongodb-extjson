@@ -1,3 +1,13 @@
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.1...v2.1.2) (2018-04-06)
+
+
+### Features
+
+* **bson:** bump dependency on js-bson to track 2.x ([f00bc9f](https://github.com/mongodb-js/mongodb-extjson/commit/f00bc9f))
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/mongodb-js/mongodb-extjson/compare/v2.0.0...v2.1.1) (2018-04-01)
 
