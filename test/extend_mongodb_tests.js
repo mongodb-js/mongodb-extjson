@@ -185,17 +185,20 @@ describe('Extended JSON', function() {
       });
 
       it('should allow relaxed parsing', function() {
+        const dt = new Date(1452124800000);
         const inputObject = {
           int: { $numberInt: '500' },
           long: { $numberLong: '42' },
-          double: { $numberDouble: '24' }
+          double: { $numberDouble: '24' },
+          date: { $date: { $numberLong: '1452124800000' } }
         };
 
         const parsed = extJSON.parse(JSON.stringify(inputObject), { relaxed: true });
         expect(parsed).to.eql({
           int: 500,
           long: 42,
-          double: 24
+          double: 24,
+          date: dt
         });
       });
     });
