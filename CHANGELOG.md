@@ -1,3 +1,13 @@
+<a name="2.1.3"></a>
+## [2.1.3](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.2...v2.1.3) (2018-05-01)
+
+
+### Bug Fixes
+
+* **date:** fix date decode in relaxed mode ([#13](https://github.com/mongodb-js/mongodb-extjson/issues/13)) ([dc416aa](https://github.com/mongodb-js/mongodb-extjson/commit/dc416aa))
+
+
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.1...v2.1.2) (2018-04-06)
 
