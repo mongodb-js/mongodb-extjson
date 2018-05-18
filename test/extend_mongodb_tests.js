@@ -164,6 +164,9 @@ describe('Extended JSON', function() {
           _id: { $nin: [new ObjectID('591801a468f9e7024b6235ea')] }
         });
         expect(serialized).to.equal('{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
+
+        serialized = extJSON.stringify(new Binary(new Uint8Array([1, 2, 3, 4, 5])));
+        expect(serialized).to.equal('{"$binary":{"base64":"AQIDBAU=","subType":"00"}}');
       });
 
       it('should correctly parse null values', function() {
