@@ -204,6 +204,15 @@ describe('Extended JSON', function() {
           date: dt
         });
       });
+
+      it('should allow regexp', function() {
+        const parsedRegExp = extJSON.stringify({ test: /some-regex/i }, { relaxed: true });
+        const parsedBSONRegExp = extJSON.stringify(
+          { test: new BSONRegExp('some-regex', 'i') },
+          { relaxed: true }
+        );
+        expect(parsedRegExp).to.eql(parsedBSONRegExp);
+      });
     });
   });
 });
