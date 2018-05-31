@@ -42,7 +42,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.4.1",
     "mongodb": "^2.2.27",
-    "prettier": "^1.7.0",
+    "prettier": "~1.12.0",
     "rollup": "^0.56.2",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.3.0",
