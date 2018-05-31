@@ -1,3 +1,14 @@
+<a name="2.1.4"></a>
+## [2.1.4](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.3...v2.1.4) (2018-05-31)
+
+
+### Bug Fixes
+
+* **binary:** generate valid base64 for non-Buffer types ([44afbb8](https://github.com/mongodb-js/mongodb-extjson/commit/44afbb8))
+* **parsing:** support encoding and decoding RegExps ([06691f6](https://github.com/mongodb-js/mongodb-extjson/commit/06691f6))
+
+
+
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.2...v2.1.3) (2018-05-01)
 
