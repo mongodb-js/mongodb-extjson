@@ -49,6 +49,6 @@
     "rollup-plugin-node-resolve": "^3.0.3"
   },
   "dependencies": {
-    "bson": "^2.0.7"
+    "bson": "mongodb/js-bson#3.0"
   }
 }
