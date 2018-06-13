@@ -1,9 +1,9 @@
 {
   "name": "mongodb-extjson",
-  "version": "2.1.4",
+  "version": "3.0.0",
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
-  "browser": "dist/bundle.js",
+  "browser": "dist/mongodb-extjson.js",
   "scripts": {
     "test": "mocha test/",
     "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/",
@@ -49,6 +49,6 @@
     "rollup-plugin-node-resolve": "^3.0.3"
   },
   "dependencies": {
-    "bson": "mongodb/js-bson#3.0"
+    "bson": "^3.0.0"
   }
 }
