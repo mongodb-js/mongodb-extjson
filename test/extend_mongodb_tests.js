@@ -1,5 +1,6 @@
 'use strict';
 
+const Buffer = require('buffer').Buffer;
 let assert = require('assert'),
   path = require('path'),
   expect = require('chai').expect;
