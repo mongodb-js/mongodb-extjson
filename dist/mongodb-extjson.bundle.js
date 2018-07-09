@@ -7013,7 +7013,6 @@ var deserialize = function deserialize(buffer, options, isArray) {
   }
 
   if (!options.allowObjectSmallerThanBufferSize && Buffer$4.byteLength(buffer) !== size) {
-    console.log(buffer, buffer.length, Buffer$4.byteLength(buffer));
     throw new Error('buffer length ' + Buffer$4.byteLength(buffer) + ' must === bson size ' + size);
   }
 

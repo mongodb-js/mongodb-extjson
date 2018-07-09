@@ -60,7 +60,7 @@ export default [
   {
     input,
     output: {
-      file: 'dist/mongodb-extjson.browser.js',
+      file: 'dist/mongodb-extjson.browser.umd.js',
       format: 'umd',
       name: defaultName,
       exports: 'named',

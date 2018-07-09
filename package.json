@@ -5,7 +5,7 @@
   "main": "index.js",
   "module": "dist/mongodb-extjson.esm.js",
   "browser": {
-    "./index.js": "./dist/mongodb-extjson.browser.js",
+    "./index.js": "./dist/mongodb-extjson.browser.umd.js",
     "./dist/mongodb-extjson.esm.js": "./dist/mongodb-extjson.browser.esm.js"
   },
   "directories": {
