@@ -58,7 +58,7 @@
     "rollup-plugin-node-resolve": "^3.0.3"
   },
   "dependencies": {
-    "bson": "file:///Users/eric/js/js-bson",
+    "bson": "3.0.1",
     "buffer": "^5.1.0"
   }
 }
