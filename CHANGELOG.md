@@ -1,3 +1,13 @@
+<a name="3.0.3"></a>
+## [3.0.3](https://github.com/mongodb-js/mongodb-extjson/compare/v3.0.2...v3.0.3) (2018-07-13)
+
+
+### Bug Fixes
+
+* **breaking:** reverts breaking changes in v3.0.1 and v3.0.2 ([3fab274](https://github.com/mongodb-js/mongodb-extjson/commit/3fab274))
+
+
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.3...v2.1.4) (2018-05-31)
 
