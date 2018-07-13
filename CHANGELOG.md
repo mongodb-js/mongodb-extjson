@@ -1,3 +1,13 @@
+<a name="3.0.2"></a>
+## [3.0.2](https://github.com/mongodb-js/mongodb-extjson/compare/v3.0.1...v3.0.2) (2018-07-13)
+
+
+### Bug Fixes
+
+* **package.json:** fixing package.json missing files ([dea2b90](https://github.com/mongodb-js/mongodb-extjson/commit/dea2b90))
+
+
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/mongodb-js/mongodb-extjson/compare/v3.0.0...v3.0.1) (2018-07-13)
 
