@@ -1,3 +1,13 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/mongodb-js/mongodb-extjson/compare/v3.0.0...v3.0.1) (2018-07-13)
+
+
+### Bug Fixes
+
+* **rollup:** fixup dist and bundle in Buffer ([7e2f840](https://github.com/mongodb-js/mongodb-extjson/commit/7e2f840))
+
+
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.3...v2.1.4) (2018-05-31)
 
