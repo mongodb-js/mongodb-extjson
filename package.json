@@ -11,6 +11,11 @@
   "directories": {
     "lib": "./lib"
   },
+  "files": [
+    "lib",
+    "index.js",
+    "dist"
+  ],
   "scripts": {
     "test": "mocha test/",
     "coverage": "istanbul cover _mocha -- --recursive -t --ui tdd test/",
