@@ -1,6 +1,6 @@
 {
   "name": "mongodb-extjson",
-  "version": "3.0.0",
+  "version": "3.0.3",
   "description": "MongoDB Extended JSON library",
   "main": "index.js",
   "browser": "dist/mongodb-extjson.js",
@@ -49,6 +49,6 @@
     "rollup-plugin-node-resolve": "^3.0.3"
   },
   "dependencies": {
-    "bson": "^3.0.0"
+    "bson": "^3.0.2"
   }
 }
