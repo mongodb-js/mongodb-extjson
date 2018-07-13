@@ -83,13 +83,3 @@ console.log(EJSON.parse(text));
 [travis_url]: https://travis-ci.org/mongodb-js/mongodb-extjson
 [npm_img]: https://img.shields.io/npm/v/mongodb-extjson.svg
 [npm_url]: https://www.npmjs.org/package/mongodb-extjson
-
-## FAQ
-
-#### What are the various files in dist?
-
-* `mongodb-extjson.bundle.js` is a bundled up version of the library that is suitable for inclusion in an HTML page via a `<script>` tag.
-* `mongodb-extjson.esm.js` is a rolled up version of the library that is suitable for interoperation with bundlers that work better with ES modules.
-* `mongodb-extjson.browser.esm.js` is similar to `mongodb-extjson.esm.js` but is ultimately intened for consumers producing browser bundles. It also pulls in any browser specific dependencies/code that may be needed.
-* `mongodb-extjson.browser.umd.js` is similar to the source code of this library but is ultimately intened for consumers producing browser bundlers expecting a UMD format. It also pulls in any browser specific dependencies/code that may be needed.
-

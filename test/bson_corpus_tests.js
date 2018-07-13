@@ -1,6 +1,5 @@
 'use strict';
 
-const Buffer = require('buffer').Buffer;
 var extJSON = require('..'),
   //BSON = require('../../js-bson'),
   BSON = require('bson'),
