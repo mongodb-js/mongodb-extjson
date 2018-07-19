@@ -1,7 +1,6 @@
 'use strict';
 
 const extJSON = require('..');
-//BSON = require('../../js-bson'),
 const BSON = require('bson');
 const expect = require('chai').expect;
 
