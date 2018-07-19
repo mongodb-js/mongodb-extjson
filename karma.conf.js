@@ -14,7 +14,7 @@ const rollupPlugins = [
   }),
   commonjs({
     namedExports: {
-      'node_modules/buffer/index.js': ['isBuffer']
+      'node_modules/buffer/index.js': ['isBuffer'] // indicate that isBuffer is exported by the buffer module to avoid preprocessing error
     }
   }),
   nodeBuiltins(),
@@ -30,8 +30,13 @@ const rollupConfig = {
   }
 };
 
+// silence rollup warnings for circular dependencies in node_modules, use of eval function
 const onwarn = warning => {
-  if (warning.code === 'CIRCULAR_DEPENDENCY' || warning.code === 'EVAL') return;
+  if (
+    (warning.code === 'CIRCULAR_DEPENDENCY' && warning.importer.includes('node_modules')) ||
+    warning.code === 'EVAL'
+  )
+    return;
   console.warn(warning.toString());
 };
 
