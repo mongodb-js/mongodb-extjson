@@ -121,7 +121,7 @@ describe('Extended JSON', function() {
     var input = '{"result":[{"_id":{"$oid":"591801a468f9e7024b623939"},"emptyField":null}]}';
     var parsed = extJSON.parse(input, { strict: false });
 
-    assert.deepEqual(parsed, {
+    expect(parsed).to.deep.equal({
       result: [{ _id: new ObjectID('591801a468f9e7024b623939'), emptyField: null }]
     });
   });
