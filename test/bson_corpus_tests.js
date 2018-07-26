@@ -1,19 +1,8 @@
 'use strict';
 
-var extJSON = require('..'),
-  //BSON = require('../../js-bson'),
-  BSON = require('bson'),
-  expect = require('chai').expect,
-  fs = require('fs'),
-  path = require('path');
-
-function findScenarios() {
-  return fs
-    .readdirSync(path.join(__dirname, 'bson-corpus'))
-    .filter(x => x.indexOf('json') !== -1)
-    .map(x => [x, fs.readFileSync(path.join(__dirname, 'bson-corpus', x), 'utf8')])
-    .map(x => [path.basename(x[0], '.json'), JSON.parse(x[1])]);
-}
+const extJSON = require('..');
+const BSON = require('bson');
+const expect = require('chai').expect;
 
 function nativeToBson(native) {
   var b = new BSON();
@@ -81,12 +70,13 @@ var modifiedMultitype = {
   }
 };
 
+const corpus = require('./tools/bson_corpus_test_loader');
+
 describe('BSON Corpus Tests:', function() {
-  findScenarios().forEach(scenario => {
-    var scenarioData = scenario[1],
-      deprecated = scenarioData.deprecated,
-      description = scenarioData.description,
-      valid = scenarioData.valid || [];
+  corpus.forEach(scenario => {
+    const deprecated = scenario.deprecated;
+    const description = scenario.description;
+    const valid = scenario.valid || [];
 
     // since doubles are formatted differently in JS than in corpus, overwrite expected results
     if (description === 'Double type') {
