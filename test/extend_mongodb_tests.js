@@ -158,4 +158,23 @@ describe('Extended JSON', function() {
     );
     expect(parsedRegExp).to.eql(parsedBSONRegExp);
   });
+
+  it('should serialize from EJSON to JSON', function() {
+    const doc = {
+      result: true,
+      num: { _bsontype: 'Int32', value: 3 },
+      string: 'hello'
+    };
+    const JSON = extJSON.serialize(doc);
+    expect(JSON).to.deep.equal({ result: true, num: { $numberInt: '3' }, string: 'hello' });
+  });
+
+  it('should deserialize from JSON to EJSON', function() {
+    const doc = { result: true, int32: new Int32(10), string: 'hello' };
+    const EJSON = extJSON.deserialize(doc);
+    expect(EJSON.int32._bsontype).to.equal('Int32');
+    expect(EJSON.int32.value).to.equal(10);
+    expect(EJSON.result).to.equal(true);
+    expect(EJSON.string).to.equal('hello');
+  });
 });
