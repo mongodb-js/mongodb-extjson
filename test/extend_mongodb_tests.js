@@ -159,22 +159,93 @@ describe('Extended JSON', function() {
     expect(parsedRegExp).to.eql(parsedBSONRegExp);
   });
 
-  it('should serialize from EJSON to JSON', function() {
+  it('should serialize from BSON to JSON', function() {
     const doc = {
-      result: true,
-      num: { _bsontype: 'Int32', value: 3 },
-      string: 'hello'
+      binary: new Binary(''),
+      code: new Code('function() {}'),
+      dbRef: new DBRef('tests', new Int32(1), 'test'),
+      decimal128: new Decimal128(128),
+      double: new Double(10.1),
+      int32: new Int32(10),
+      long: new Long(234),
+      maxKey: new MaxKey(),
+      minKey: new MinKey(),
+      objectID: ObjectID.createFromHexString('111111111111111111111111'),
+      bsonRegExp: new BSONRegExp('hello world', 'i'),
+      symbol: new Symbol('symbol'),
+      timestamp: new Timestamp()
     };
+
     const JSON = extJSON.serialize(doc);
-    expect(JSON).to.deep.equal({ result: true, num: { $numberInt: '3' }, string: 'hello' });
+
+    expect(JSON).to.deep.equal({
+      binary: { $binary: { base64: '', subType: '00' } },
+      code: { $code: 'function() {}' },
+      dbRef: { $ref: 'tests', $id: { $numberInt: '1' }, $db: 'test' },
+      decimal128: { $numberDecimal: '0E-6176' },
+      double: { $numberDouble: '10.1' },
+      int32: { $numberInt: '10' },
+      long: { $numberLong: '234' },
+      maxKey: { $maxKey: 1 },
+      minKey: { $minKey: 1 },
+      objectID: { $oid: '111111111111111111111111' },
+      bsonRegExp: { $regularExpression: { pattern: 'hello world', options: 'i' } },
+      symbol: { $symbol: 'symbol' },
+      timestamp: { $timestamp: { t: 0, i: 0 } }
+    });
   });
 
-  it('should deserialize from JSON to EJSON', function() {
-    const doc = { result: true, int32: new Int32(10), string: 'hello' };
-    const EJSON = extJSON.deserialize(doc);
-    expect(EJSON.int32._bsontype).to.equal('Int32');
-    expect(EJSON.int32.value).to.equal(10);
-    expect(EJSON.result).to.equal(true);
-    expect(EJSON.string).to.equal('hello');
+  it('should deserialize from JSON to BSON', function() {
+    const doc = {
+      binary: { $binary: { base64: '', subType: '00' } },
+      code: { $code: 'function() {}' },
+      dbRef: { $ref: 'tests', $id: { $numberInt: '1' }, $db: 'test' },
+      decimal128: { $numberDecimal: '0E-6176' },
+      double: { $numberDouble: '10.1' },
+      int32: { $numberInt: '10' },
+      long: { $numberLong: '234' },
+      maxKey: { $maxKey: 1 },
+      minKey: { $minKey: 1 },
+      objectID: { $oid: '111111111111111111111111' },
+      bsonRegExp: { $regularExpression: { pattern: 'hello world', options: 'i' } },
+      symbol: { $symbol: 'symbol' },
+      timestamp: { $timestamp: { t: 0, i: 0 } }
+    };
+
+    const BSON = extJSON.deserialize(doc);
+
+    // binary
+    expect(BSON.binary._bsontype).to.equal('Binary');
+    // code
+    expect(BSON.code._bsontype).to.equal('Code');
+    expect(BSON.code.code).to.equal('function() {}');
+    // dbRef
+    expect(BSON.dbRef._bsontype).to.equal('DBRef');
+    expect(BSON.dbRef.collection).to.equal('tests');
+    expect(BSON.dbRef.db).to.equal('test');
+    // decimal128
+    expect(BSON.decimal128._bsontype).to.equal('Decimal128');
+    // double
+    expect(BSON.double._bsontype).to.equal('Double');
+    expect(BSON.double.value).to.equal(10.1);
+    // int32
+    expect(BSON.int32._bsontype).to.equal('Int32');
+    expect(BSON.int32.value).to.equal('10');
+    //long
+    expect(BSON.long._bsontype).to.equal('Long');
+    // maxKey
+    expect(BSON.maxKey._bsontype).to.equal('MaxKey');
+    // minKey
+    expect(BSON.minKey._bsontype).to.equal('MinKey');
+    // objectID
+    expect(BSON.objectID.toString()).to.equal('111111111111111111111111');
+    //bsonRegExp
+    expect(BSON.bsonRegExp._bsontype).to.equal('BSONRegExp');
+    expect(BSON.bsonRegExp.pattern).to.equal('hello world');
+    expect(BSON.bsonRegExp.options).to.equal('i');
+    // symbol
+    expect(BSON.symbol.toString()).to.equal('symbol');
+    // timestamp
+    expect(BSON.timestamp._bsontype).to.equal('Timestamp');
   });
 });
