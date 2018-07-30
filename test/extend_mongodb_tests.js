@@ -158,4 +158,94 @@ describe('Extended JSON', function() {
     );
     expect(parsedRegExp).to.eql(parsedBSONRegExp);
   });
+
+  it('should serialize from BSON object to EJSON object', function() {
+    const doc = {
+      binary: new Binary(''),
+      code: new Code('function() {}'),
+      dbRef: new DBRef('tests', new Int32(1), 'test'),
+      decimal128: new Decimal128(128),
+      double: new Double(10.1),
+      int32: new Int32(10),
+      long: new Long(234),
+      maxKey: new MaxKey(),
+      minKey: new MinKey(),
+      objectID: ObjectID.createFromHexString('111111111111111111111111'),
+      bsonRegExp: new BSONRegExp('hello world', 'i'),
+      symbol: new Symbol('symbol'),
+      timestamp: new Timestamp()
+    };
+
+    const result = extJSON.serialize(doc);
+
+    expect(result).to.deep.equal({
+      binary: { $binary: { base64: '', subType: '00' } },
+      code: { $code: 'function() {}' },
+      dbRef: { $ref: 'tests', $id: { $numberInt: '1' }, $db: 'test' },
+      decimal128: { $numberDecimal: '0E-6176' },
+      double: { $numberDouble: '10.1' },
+      int32: { $numberInt: '10' },
+      long: { $numberLong: '234' },
+      maxKey: { $maxKey: 1 },
+      minKey: { $minKey: 1 },
+      objectID: { $oid: '111111111111111111111111' },
+      bsonRegExp: { $regularExpression: { pattern: 'hello world', options: 'i' } },
+      symbol: { $symbol: 'symbol' },
+      timestamp: { $timestamp: { t: 0, i: 0 } }
+    });
+  });
+
+  it('should deserialize from EJSON object to BSON object', function() {
+    const doc = {
+      binary: { $binary: { base64: '', subType: '00' } },
+      code: { $code: 'function() {}' },
+      dbRef: { $ref: 'tests', $id: { $numberInt: '1' }, $db: 'test' },
+      decimal128: { $numberDecimal: '0E-6176' },
+      double: { $numberDouble: '10.1' },
+      int32: { $numberInt: '10' },
+      long: { $numberLong: '234' },
+      maxKey: { $maxKey: 1 },
+      minKey: { $minKey: 1 },
+      objectID: { $oid: '111111111111111111111111' },
+      bsonRegExp: { $regularExpression: { pattern: 'hello world', options: 'i' } },
+      symbol: { $symbol: 'symbol' },
+      timestamp: { $timestamp: { t: 0, i: 0 } }
+    };
+
+    const result = extJSON.deserialize(doc);
+
+    // binary
+    expect(result.binary).to.be.an.instanceOf(BSON.Binary);
+    // code
+    expect(result.code).to.be.an.instanceOf(BSON.Code);
+    expect(result.code.code).to.equal('function() {}');
+    // dbRef
+    expect(result.dbRef).to.be.an.instanceOf(BSON.DBRef);
+    expect(result.dbRef.collection).to.equal('tests');
+    expect(result.dbRef.db).to.equal('test');
+    // decimal128
+    expect(result.decimal128).to.be.an.instanceOf(BSON.Decimal128);
+    // double
+    expect(result.double).to.be.an.instanceOf(BSON.Double);
+    expect(result.double.value).to.equal(10.1);
+    // int32
+    expect(result.int32).to.be.an.instanceOf(BSON.Int32);
+    expect(result.int32.value).to.equal('10');
+    //long
+    expect(result.long).to.be.an.instanceOf(BSON.Long);
+    // maxKey
+    expect(result.maxKey).to.be.an.instanceOf(BSON.MaxKey);
+    // minKey
+    expect(result.minKey).to.be.an.instanceOf(BSON.MinKey);
+    // objectID
+    expect(result.objectID.toString()).to.equal('111111111111111111111111');
+    //bsonRegExp
+    expect(result.bsonRegExp).to.be.an.instanceOf(BSON.BSONRegExp);
+    expect(result.bsonRegExp.pattern).to.equal('hello world');
+    expect(result.bsonRegExp.options).to.equal('i');
+    // symbol
+    expect(result.symbol.toString()).to.equal('symbol');
+    // timestamp
+    expect(result.timestamp).to.be.an.instanceOf(BSON.Timestamp);
+  });
 });
