@@ -159,7 +159,7 @@ describe('Extended JSON', function() {
     expect(parsedRegExp).to.eql(parsedBSONRegExp);
   });
 
-  it('should serialize from BSON to JSON', function() {
+  it('should serialize from BSON object to EJSON object', function() {
     const doc = {
       binary: new Binary(''),
       code: new Code('function() {}'),
@@ -176,9 +176,9 @@ describe('Extended JSON', function() {
       timestamp: new Timestamp()
     };
 
-    const JSON = extJSON.serialize(doc);
+    const result = extJSON.serialize(doc);
 
-    expect(JSON).to.deep.equal({
+    expect(result).to.deep.equal({
       binary: { $binary: { base64: '', subType: '00' } },
       code: { $code: 'function() {}' },
       dbRef: { $ref: 'tests', $id: { $numberInt: '1' }, $db: 'test' },
@@ -195,7 +195,7 @@ describe('Extended JSON', function() {
     });
   });
 
-  it('should deserialize from JSON to BSON', function() {
+  it('should deserialize from EJSON object to BSON object', function() {
     const doc = {
       binary: { $binary: { base64: '', subType: '00' } },
       code: { $code: 'function() {}' },
@@ -212,40 +212,40 @@ describe('Extended JSON', function() {
       timestamp: { $timestamp: { t: 0, i: 0 } }
     };
 
-    const BSON = extJSON.deserialize(doc);
+    const result = extJSON.deserialize(doc);
 
     // binary
-    expect(BSON.binary._bsontype).to.equal('Binary');
+    expect(result.binary).to.be.an.instanceOf(BSON.Binary);
     // code
-    expect(BSON.code._bsontype).to.equal('Code');
-    expect(BSON.code.code).to.equal('function() {}');
+    expect(result.code).to.be.an.instanceOf(BSON.Code);
+    expect(result.code.code).to.equal('function() {}');
     // dbRef
-    expect(BSON.dbRef._bsontype).to.equal('DBRef');
-    expect(BSON.dbRef.collection).to.equal('tests');
-    expect(BSON.dbRef.db).to.equal('test');
+    expect(result.dbRef).to.be.an.instanceOf(BSON.DBRef);
+    expect(result.dbRef.collection).to.equal('tests');
+    expect(result.dbRef.db).to.equal('test');
     // decimal128
-    expect(BSON.decimal128._bsontype).to.equal('Decimal128');
+    expect(result.decimal128).to.be.an.instanceOf(BSON.Decimal128);
     // double
-    expect(BSON.double._bsontype).to.equal('Double');
-    expect(BSON.double.value).to.equal(10.1);
+    expect(result.double).to.be.an.instanceOf(BSON.Double);
+    expect(result.double.value).to.equal(10.1);
     // int32
-    expect(BSON.int32._bsontype).to.equal('Int32');
-    expect(BSON.int32.value).to.equal('10');
+    expect(result.int32).to.be.an.instanceOf(BSON.Int32);
+    expect(result.int32.value).to.equal('10');
     //long
-    expect(BSON.long._bsontype).to.equal('Long');
+    expect(result.long).to.be.an.instanceOf(BSON.Long);
     // maxKey
-    expect(BSON.maxKey._bsontype).to.equal('MaxKey');
+    expect(result.maxKey).to.be.an.instanceOf(BSON.MaxKey);
     // minKey
-    expect(BSON.minKey._bsontype).to.equal('MinKey');
+    expect(result.minKey).to.be.an.instanceOf(BSON.MinKey);
     // objectID
-    expect(BSON.objectID.toString()).to.equal('111111111111111111111111');
+    expect(result.objectID.toString()).to.equal('111111111111111111111111');
     //bsonRegExp
-    expect(BSON.bsonRegExp._bsontype).to.equal('BSONRegExp');
-    expect(BSON.bsonRegExp.pattern).to.equal('hello world');
-    expect(BSON.bsonRegExp.options).to.equal('i');
+    expect(result.bsonRegExp).to.be.an.instanceOf(BSON.BSONRegExp);
+    expect(result.bsonRegExp.pattern).to.equal('hello world');
+    expect(result.bsonRegExp.options).to.equal('i');
     // symbol
-    expect(BSON.symbol.toString()).to.equal('symbol');
+    expect(result.symbol.toString()).to.equal('symbol');
     // timestamp
-    expect(BSON.timestamp._bsontype).to.equal('Timestamp');
+    expect(result.timestamp).to.be.an.instanceOf(BSON.Timestamp);
   });
 });
