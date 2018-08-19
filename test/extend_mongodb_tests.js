@@ -83,20 +83,30 @@ describe('Extended JSON', function() {
   it('should correctly serialize, and deserialize using built-in BSON', function() {
     // Create ExtJSON instance
     var Int32 = extJSON.BSON.Int32;
+    var Long = extJSON.BSON.Long;
+    var Double = extJSON.BSON.Double;
+
     // Create a doc
     var doc1 = {
-      int32: new Int32(10)
+      int32: new Int32(10),
+      long: new Long(100),
+      double: new Double(10.1)
     };
 
     // Serialize the document
     var text = extJSON.stringify(doc1, null, 0);
-    expect(text).to.equal('{"int32":{"$numberInt":"10"}}');
+    expect(text).to.equal('{"int32":{"$numberInt":"10"},"long":{"$numberLong":"100"},"double":{"$numberDouble":"10.1"}}');
 
     // Deserialize the json in strict and non strict mode
     var doc2 = extJSON.parse(text, { strict: true });
     expect(doc2.int32._bsontype).to.equal('Int32');
+    expect(doc2.long._bsontype).to.equal('Long');
+    expect(doc2.double._bsontype).to.equal('Double');
+
     doc2 = extJSON.parse(text, { strict: false });
     expect(doc2.int32).to.equal(10);
+    expect(doc2.long).to.equal(100);
+    expect(doc2.double).to.equal(10.1);
   });
 
   it('should correctly serialize bson types when they are values', function() {
