@@ -23,11 +23,11 @@ function bsonToNative(bson) {
 }
 
 function jsonToNative(json) {
-  return EJSON.parse(json);
+  return EJSON.parse(json, { relaxed: false });
 }
 
 function nativeToCEJSON(native) {
-  return EJSON.stringify(native);
+  return EJSON.stringify(native, { relaxed: false });
 }
 
 function nativeToREJSON(native) {

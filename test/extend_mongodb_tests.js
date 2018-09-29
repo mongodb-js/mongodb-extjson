@@ -57,12 +57,12 @@ describe('Extended JSON', function() {
     var json =
       '{"_id":{"$numberInt":"100"},"gh":{"$numberInt":"1"},"binary":{"$binary":{"base64":"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+Pw==","subType":"00"}},"date":{"$date":{"$numberLong":"1488372056737"}},"code":{"$code":"function() {}","$scope":{"a":{"$numberInt":"1"}}},"dbRef":{"$ref":"tests","$id":{"$numberInt":"1"},"$db":"test"},"decimal":{"$numberDecimal":"100"},"double":{"$numberDouble":"10.1"},"int32":{"$numberInt":"10"},"long":{"$numberLong":"200"},"maxKey":{"$maxKey":1},"minKey":{"$minKey":1},"objectId":{"$oid":"111111111111111111111111"},"regexp":{"$regularExpression":{"pattern":"hello world","options":"i"}},"symbol":{"$symbol":"symbol"},"timestamp":{"$timestamp":{"t":0,"i":1000}},"int32Number":{"$numberInt":"300"},"doubleNumber":{"$numberDouble":"200.2"},"longNumberIntFit":{"$numberLong":"7036874417766400"},"doubleNumberIntFit":{"$numberLong":"19007199250000000"}}';
 
-    assert.equal(json, EJSON.stringify(doc, null, 0));
+    assert.equal(json, EJSON.stringify(doc, null, 0, { relaxed: false }));
   });
 
-  it('should correctly deserialize using strict, and non-strict mode', function() {
+  it('should correctly deserialize using the default relaxed mode', function() {
     // Deserialize the document using non strict mode
-    var doc1 = EJSON.parse(EJSON.stringify(doc, null, 0), { strict: false });
+    var doc1 = EJSON.parse(EJSON.stringify(doc, null, 0));
 
     // Validate the values
     assert.equal(300, doc1.int32Number);
@@ -71,7 +71,7 @@ describe('Extended JSON', function() {
     assert.equal(19007199250000000.12, doc1.doubleNumberIntFit);
 
     // Deserialize the document using strict mode
-    doc1 = EJSON.parse(EJSON.stringify(doc, null, 0), { strict: true });
+    doc1 = EJSON.parse(EJSON.stringify(doc, null, 0), { relaxed: false });
 
     // Validate the values
     expect(doc1.int32Number._bsontype).to.equal('Int32');
@@ -89,28 +89,31 @@ describe('Extended JSON', function() {
     };
 
     // Serialize the document
-    var text = EJSON.stringify(doc1, null, 0);
+    var text = EJSON.stringify(doc1, null, 0, { relaxed: false });
     expect(text).to.equal('{"int32":{"$numberInt":"10"}}');
 
     // Deserialize the json in strict and non strict mode
-    var doc2 = EJSON.parse(text, { strict: true });
+    var doc2 = EJSON.parse(text, { relaxed: false });
     expect(doc2.int32._bsontype).to.equal('Int32');
-    doc2 = EJSON.parse(text, { strict: false });
+    doc2 = EJSON.parse(text);
     expect(doc2.int32).to.equal(10);
   });
 
   it('should correctly serialize bson types when they are values', function() {
     var Int32 = EJSON.BSON.Int32;
-    var serialized = EJSON.stringify(new ObjectID('591801a468f9e7024b6235ea'));
+    var serialized = EJSON.stringify(new ObjectID('591801a468f9e7024b6235ea'), { relaxed: false });
     expect(serialized).to.equal('{"$oid":"591801a468f9e7024b6235ea"}');
-    serialized = EJSON.stringify(new Int32(42));
+    serialized = EJSON.stringify(new Int32(42), { relaxed: false });
     expect(serialized).to.equal('{"$numberInt":"42"}');
-    serialized = EJSON.stringify({
-      _id: { $nin: [new ObjectID('591801a468f9e7024b6235ea')] }
-    });
+    serialized = EJSON.stringify(
+      {
+        _id: { $nin: [new ObjectID('591801a468f9e7024b6235ea')] }
+      },
+      { relaxed: false }
+    );
     expect(serialized).to.equal('{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
 
-    serialized = EJSON.stringify(new Binary(new Uint8Array([1, 2, 3, 4, 5])));
+    serialized = EJSON.stringify(new Binary(new Uint8Array([1, 2, 3, 4, 5])), { relaxed: false });
     expect(serialized).to.equal('{"$binary":{"base64":"AQIDBAU=","subType":"00"}}');
   });
 
@@ -119,7 +122,7 @@ describe('Extended JSON', function() {
     expect(EJSON.parse('[null]')[0]).to.be.null;
 
     var input = '{"result":[{"_id":{"$oid":"591801a468f9e7024b623939"},"emptyField":null}]}';
-    var parsed = EJSON.parse(input, { strict: false });
+    var parsed = EJSON.parse(input);
 
     expect(parsed).to.deep.equal({
       result: [{ _id: new ObjectID('591801a468f9e7024b623939'), emptyField: null }]
@@ -128,11 +131,11 @@ describe('Extended JSON', function() {
 
   it('should correctly throw when passed a non-string to parse', function() {
     expect(() => {
-      EJSON.parse({}, { strict: true });
+      EJSON.parse({});
     }).to.throw;
   });
 
-  it('should allow relaxed parsing', function() {
+  it('should allow relaxed parsing by default', function() {
     const dt = new Date(1452124800000);
     const inputObject = {
       int: { $numberInt: '500' },
@@ -141,7 +144,7 @@ describe('Extended JSON', function() {
       date: { $date: { $numberLong: '1452124800000' } }
     };
 
-    const parsed = EJSON.parse(JSON.stringify(inputObject), { relaxed: true });
+    const parsed = EJSON.parse(JSON.stringify(inputObject));
     expect(parsed).to.eql({
       int: 500,
       long: 42,
@@ -151,7 +154,7 @@ describe('Extended JSON', function() {
   });
 
   it('should allow regexp', function() {
-    const parsedRegExp = EJSON.stringify({ test: /some-regex/i }, { relaxed: true });
+    const parsedRegExp = EJSON.stringify({ test: /some-regex/i });
     const parsedBSONRegExp = EJSON.stringify(
       { test: new BSONRegExp('some-regex', 'i') },
       { relaxed: true }
@@ -176,7 +179,7 @@ describe('Extended JSON', function() {
       timestamp: new Timestamp()
     };
 
-    const result = EJSON.serialize(doc);
+    const result = EJSON.serialize(doc, { relaxed: false });
     expect(result).to.deep.equal({
       binary: { $binary: { base64: '', subType: '00' } },
       code: { $code: 'function() {}' },
@@ -211,7 +214,7 @@ describe('Extended JSON', function() {
       timestamp: { $timestamp: { t: 0, i: 0 } }
     };
 
-    const result = EJSON.deserialize(doc);
+    const result = EJSON.deserialize(doc, { relaxed: false });
 
     // binary
     expect(result.binary).to.be.an.instanceOf(BSON.Binary);
