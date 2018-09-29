@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const expect = require('chai').expect;
-const extJSON = require('..');
+const EJSON = require('..');
 const BSON = require('bson');
 
 // BSON types
@@ -57,12 +57,12 @@ describe('Extended JSON', function() {
     var json =
       '{"_id":{"$numberInt":"100"},"gh":{"$numberInt":"1"},"binary":{"$binary":{"base64":"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+Pw==","subType":"00"}},"date":{"$date":{"$numberLong":"1488372056737"}},"code":{"$code":"function() {}","$scope":{"a":{"$numberInt":"1"}}},"dbRef":{"$ref":"tests","$id":{"$numberInt":"1"},"$db":"test"},"decimal":{"$numberDecimal":"100"},"double":{"$numberDouble":"10.1"},"int32":{"$numberInt":"10"},"long":{"$numberLong":"200"},"maxKey":{"$maxKey":1},"minKey":{"$minKey":1},"objectId":{"$oid":"111111111111111111111111"},"regexp":{"$regularExpression":{"pattern":"hello world","options":"i"}},"symbol":{"$symbol":"symbol"},"timestamp":{"$timestamp":{"t":0,"i":1000}},"int32Number":{"$numberInt":"300"},"doubleNumber":{"$numberDouble":"200.2"},"longNumberIntFit":{"$numberLong":"7036874417766400"},"doubleNumberIntFit":{"$numberLong":"19007199250000000"}}';
 
-    assert.equal(json, extJSON.stringify(doc, null, 0));
+    assert.equal(json, EJSON.stringify(doc, null, 0));
   });
 
   it('should correctly deserialize using strict, and non-strict mode', function() {
     // Deserialize the document using non strict mode
-    var doc1 = extJSON.parse(extJSON.stringify(doc, null, 0), { strict: false });
+    var doc1 = EJSON.parse(EJSON.stringify(doc, null, 0), { strict: false });
 
     // Validate the values
     assert.equal(300, doc1.int32Number);
@@ -71,7 +71,7 @@ describe('Extended JSON', function() {
     assert.equal(19007199250000000.12, doc1.doubleNumberIntFit);
 
     // Deserialize the document using strict mode
-    doc1 = extJSON.parse(extJSON.stringify(doc, null, 0), { strict: true });
+    doc1 = EJSON.parse(EJSON.stringify(doc, null, 0), { strict: true });
 
     // Validate the values
     expect(doc1.int32Number._bsontype).to.equal('Int32');
@@ -82,44 +82,44 @@ describe('Extended JSON', function() {
 
   it('should correctly serialize, and deserialize using built-in BSON', function() {
     // Create ExtJSON instance
-    var Int32 = extJSON.BSON.Int32;
+    var Int32 = EJSON.BSON.Int32;
     // Create a doc
     var doc1 = {
       int32: new Int32(10)
     };
 
     // Serialize the document
-    var text = extJSON.stringify(doc1, null, 0);
+    var text = EJSON.stringify(doc1, null, 0);
     expect(text).to.equal('{"int32":{"$numberInt":"10"}}');
 
     // Deserialize the json in strict and non strict mode
-    var doc2 = extJSON.parse(text, { strict: true });
+    var doc2 = EJSON.parse(text, { strict: true });
     expect(doc2.int32._bsontype).to.equal('Int32');
-    doc2 = extJSON.parse(text, { strict: false });
+    doc2 = EJSON.parse(text, { strict: false });
     expect(doc2.int32).to.equal(10);
   });
 
   it('should correctly serialize bson types when they are values', function() {
-    var Int32 = extJSON.BSON.Int32;
-    var serialized = extJSON.stringify(new ObjectID('591801a468f9e7024b6235ea'));
+    var Int32 = EJSON.BSON.Int32;
+    var serialized = EJSON.stringify(new ObjectID('591801a468f9e7024b6235ea'));
     expect(serialized).to.equal('{"$oid":"591801a468f9e7024b6235ea"}');
-    serialized = extJSON.stringify(new Int32(42));
+    serialized = EJSON.stringify(new Int32(42));
     expect(serialized).to.equal('{"$numberInt":"42"}');
-    serialized = extJSON.stringify({
+    serialized = EJSON.stringify({
       _id: { $nin: [new ObjectID('591801a468f9e7024b6235ea')] }
     });
     expect(serialized).to.equal('{"_id":{"$nin":[{"$oid":"591801a468f9e7024b6235ea"}]}}');
 
-    serialized = extJSON.stringify(new Binary(new Uint8Array([1, 2, 3, 4, 5])));
+    serialized = EJSON.stringify(new Binary(new Uint8Array([1, 2, 3, 4, 5])));
     expect(serialized).to.equal('{"$binary":{"base64":"AQIDBAU=","subType":"00"}}');
   });
 
   it('should correctly parse null values', function() {
-    expect(extJSON.parse('null')).to.be.null;
-    expect(extJSON.parse('[null]')[0]).to.be.null;
+    expect(EJSON.parse('null')).to.be.null;
+    expect(EJSON.parse('[null]')[0]).to.be.null;
 
     var input = '{"result":[{"_id":{"$oid":"591801a468f9e7024b623939"},"emptyField":null}]}';
-    var parsed = extJSON.parse(input, { strict: false });
+    var parsed = EJSON.parse(input, { strict: false });
 
     expect(parsed).to.deep.equal({
       result: [{ _id: new ObjectID('591801a468f9e7024b623939'), emptyField: null }]
@@ -128,7 +128,7 @@ describe('Extended JSON', function() {
 
   it('should correctly throw when passed a non-string to parse', function() {
     expect(() => {
-      extJSON.parse({}, { strict: true });
+      EJSON.parse({}, { strict: true });
     }).to.throw;
   });
 
@@ -141,7 +141,7 @@ describe('Extended JSON', function() {
       date: { $date: { $numberLong: '1452124800000' } }
     };
 
-    const parsed = extJSON.parse(JSON.stringify(inputObject), { relaxed: true });
+    const parsed = EJSON.parse(JSON.stringify(inputObject), { relaxed: true });
     expect(parsed).to.eql({
       int: 500,
       long: 42,
@@ -151,8 +151,8 @@ describe('Extended JSON', function() {
   });
 
   it('should allow regexp', function() {
-    const parsedRegExp = extJSON.stringify({ test: /some-regex/i }, { relaxed: true });
-    const parsedBSONRegExp = extJSON.stringify(
+    const parsedRegExp = EJSON.stringify({ test: /some-regex/i }, { relaxed: true });
+    const parsedBSONRegExp = EJSON.stringify(
       { test: new BSONRegExp('some-regex', 'i') },
       { relaxed: true }
     );
@@ -176,8 +176,7 @@ describe('Extended JSON', function() {
       timestamp: new Timestamp()
     };
 
-    const result = extJSON.serialize(doc);
-
+    const result = EJSON.serialize(doc);
     expect(result).to.deep.equal({
       binary: { $binary: { base64: '', subType: '00' } },
       code: { $code: 'function() {}' },
@@ -212,7 +211,7 @@ describe('Extended JSON', function() {
       timestamp: { $timestamp: { t: 0, i: 0 } }
     };
 
-    const result = extJSON.deserialize(doc);
+    const result = EJSON.deserialize(doc);
 
     // binary
     expect(result.binary).to.be.an.instanceOf(BSON.Binary);

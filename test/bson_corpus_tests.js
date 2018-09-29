@@ -1,15 +1,15 @@
 'use strict';
 
-const extJSON = require('..');
+const EJSON = require('..');
 const BSON = require('bson');
 const expect = require('chai').expect;
 
 function nativeToBson(native) {
-  var b = new BSON();
-  var serializeOptions = {
+  const serializeOptions = {
     ignoreUndefined: false
   };
-  return b.serialize(native, serializeOptions);
+
+  return BSON.serialize(native, serializeOptions);
 }
 
 function bsonToNative(bson) {
@@ -18,32 +18,32 @@ function bsonToNative(bson) {
     promoteLongs: true,
     promoteValues: false
   };
-  var b = new BSON();
-  return b.deserialize(bson, deserializeOptions);
+
+  return BSON.deserialize(bson, deserializeOptions);
 }
 
 function jsonToNative(json) {
-  return extJSON.parse(json);
+  return EJSON.parse(json);
 }
 
 function nativeToCEJSON(native) {
-  return extJSON.stringify(native);
+  return EJSON.stringify(native);
 }
 
 function nativeToREJSON(native) {
-  return extJSON.stringify(native, { relaxed: true });
+  return EJSON.stringify(native, { relaxed: true });
 }
 
 function normalize(cEJ) {
   return JSON.stringify(JSON.parse(cEJ));
 }
 
-var skip = {
+const skip = {
   'Timestamp with high-order bit set on both seconds and increment':
     'Current BSON implementation of timestamp/long cannot hold these values - 1 too large.'
 };
 
-var modifiedDoubles = {
+const modifiedDoubles = {
   '+1.0': { canonical_extjson: '{"d":{"$numberDouble":"1"}}' },
   '-1.0': { canonical_extjson: '{"d":{"$numberDouble":"-1"}}' },
   '1.23456789012345677E+18': { canonical_extjson: '{"d":{"$numberDouble":"1234567890123456800"}}' },
@@ -57,7 +57,7 @@ var modifiedDoubles = {
   }
 };
 
-var modifiedMultitype = {
+const modifiedMultitype = {
   'All BSON types': {
     canonical_extjson:
       '{"_id":{"$oid":"57e193d7a9cc81b4027498b5"},"Symbol":"symbol","String":"string","Int32":{"$numberInt":"42"},"Int64":{"$numberLong":"42"},"Double":{"$numberDouble":"-1"},"Binary":{"$binary":{"base64":"o0w498Or7cijeBSpkquNtg==","subType":"03"}},"BinaryUserDefined":{"$binary":{"base64":"AQIDBAU=","subType":"80"}},"Code":{"$code":"function() {}"},"CodeWithScope":{"$code":"function() {}","$scope":{}},"Subdocument":{"foo":"bar"},"Array":[{"$numberInt":"1"},{"$numberInt":"2"},{"$numberInt":"3"},{"$numberInt":"4"},{"$numberInt":"5"}],"Timestamp":{"$timestamp":{"t":42,"i":1}},"Regex":{"$regularExpression":{"pattern":"pattern","options":""}},"DatetimeEpoch":{"$date":{"$numberLong":"0"}},"DatetimePositive":{"$date":{"$numberLong":"2147483647"}},"DatetimeNegative":{"$date":{"$numberLong":"-2147483648"}},"True":true,"False":false,"DBPointer":{"$ref":"collection","$id":{"$oid":"57e193d7a9cc81b4027498b1"}},"DBRef":{"$ref":"collection","$id":{"$oid":"57fd71e96e32ab4225b723fb"},"$db":"database"},"Minkey":{"$minKey":1},"Maxkey":{"$maxKey":1},"Null":null,"Undefined":null}',
