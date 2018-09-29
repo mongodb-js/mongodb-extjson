@@ -41,13 +41,13 @@ string.
 **Example**  
 ```js
 const EJSON = require('mongodb-extjson');
-const text = '{"int32":{"$numberInt":"10"}}';
+const text = '{ "int32": { "$numberInt": "10" } }';
 
 // prints { int32: { [String: '10'] _bsontype: 'Int32', value: '10' } }
-console.log(EJSON.parse(text));
+console.log(EJSON.parse(text, { relaxed: false }));
 
 // prints { int32: 10 }
-console.log(EJSON.parse(text, {strict: false}));
+console.log(EJSON.parse(text));
 ```
 <a name="stringify"></a>
 
@@ -72,10 +72,10 @@ const Int32 = require('mongodb').Int32;
 const doc = { int32: new Int32(10) };
 
 // prints '{"int32":{"$numberInt":"10"}}'
-console.log(EJSON.stringify(doc));
+console.log(EJSON.stringify(doc, { relaxed: false }));
 
 // prints '{"int32":10}'
-console.log(EJSON.stringify(doc, {relaxed: true}));
+console.log(EJSON.stringify(doc));
 ```
 <a name="serialize"></a>
 
