@@ -1,3 +1,5 @@
+# THIS REPO IS DEPRECATED!  It's been merged into the `bson` (https://github.com/mongodb/js-bson) repo.
+
 # MongoDB Extended JSON Library  [![][npm_img]][npm_url] [![][travis_img]][travis_url]
 
 
