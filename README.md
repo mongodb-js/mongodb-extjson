@@ -1,4 +1,6 @@
-# MongoDB Extended JSON Library  [![][npm_img]][npm_url] [![][travis_img]][travis_url]
+# NOTE: This libray has been merged into the 4.x version of the [`bson`](https://www.npmjs.com/package/bson) package, and is no longer being maintained as a standalone package.
+
+## MongoDB Extended JSON Library  [![][npm_img]][npm_url] [![][travis_img]][travis_url]
 
 
 The MongoDB Extended JSON Library allows you to convert MongoDB documents to Extended JSON, and vice versa. See the Extended JSON specification [here](https://github.com/mongodb/specifications/blob/master/source/extended-json.rst).
