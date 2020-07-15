@@ -1,3 +1,15 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.1.5](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.4...v2.1.5) (2020-07-15)
+
+
+### Bug Fixes
+
+* DBRef missing ref key when extending lib ([60f4f16](https://github.com/mongodb-js/mongodb-extjson/commit/60f4f16c4ccba30fbca9f94201df9912832c9f30))
+* EJSON Double precision and update spec tests ([83c4213](https://github.com/mongodb-js/mongodb-extjson/commit/83c421396935c04e4a2c52953b228d2d5c8c1b2b))
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/mongodb-js/mongodb-extjson/compare/v2.1.3...v2.1.4) (2018-05-31)
 
@@ -109,6 +121,3 @@ Users will have to polyfill node Buffer type
 
 <a name="1.0.0"></a>
 # 1.0.0 (2017-03-01)
-
-
-
